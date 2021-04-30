@@ -1,0 +1,93 @@
+#!/usr/bin/python3
+
+import sys
+import math
+
+
+def main() :
+    
+    i = int(len(sys.argv))
+
+    if i == 1 or i == 3:
+        sys.exit(84)
+
+    x = sys.argv[1]
+
+    if x == "-h":
+        print("USAGE\n    ./102architect x y transfo1 arg11 [arg12] [transfo2 arg12 [arg22]] ...\n\nDESCRIPTION\n    x abscissa of the original point\n    y ordinate of the original point\n\n    transfo arg1 [arg2]\n    -t i j translation along vector (i, j)\n    -z m n scaling by factors m (x-axis) and n (y-axis)\n    -r d rotation centered in O by a d degree angle\n    -s d reflection over the axis passing through O with an inclination\n         angle of d degrees")
+        return 0
+
+    try :
+        x = int(sys.argv[1])
+        y = int(sys.argv[2])
+        
+    except :
+        sys.exit(84)
+
+    if sys.argv[3] != "-t" and sys.argv[3] != "-r" and sys.argv[3] != "-z" and sys.argv[3] != "-s":
+        sys.exit(84)
+    if sys.argv[3] == "-t":
+        try:
+            test = int(sys.argv[4])
+            test2 = int(sys.argv[5])
+
+        except:
+            sys.exit(84)
+    if sys.argv[3] == "-r":
+        try:
+            test = int(sys.argv[4])
+
+        except:
+            sys.exit(84)
+    if sys.argv[3] == "-z":
+        try:
+            test = int(sys.argv[4])
+            test2 = int(sys.argv[5])
+
+        except:
+            sys.exit(84)
+    if sys.argv[3] == "-s":
+        try:
+            test = int(sys.argv[4])
+
+        except:
+            sys.exit(84)
+
+    matrice = [1.00, 0.00, 0.00,
+               0.00, 1.00, 0.00,
+               0.00, 0.00, 1.00]
+    
+    i = 3
+
+    for i in range(len(sys.argv)) :
+        if sys.argv[i] == "-t" :
+            print("Translation along vector (", int(sys.argv[i+1]), ", ", int(sys.argv[i+2]), ")", sep = "")
+            matrice[2] = float(sys.argv[i+1]) + matrice[2]
+            matrice[5] = float(sys.argv[i+2]) + matrice[5]
+        if sys.argv[i] == "-r" :
+            print("Rotation by a ", int(sys.argv[i+1]), " degree angle", sep = "")
+            matrice[0] = math.cos(float(sys.argv[i+1]) / 180 * math.pi)
+            matrice[1] = -math.sin(float(sys.argv[i+1]) / 180 * math.pi)
+            if matrice[1] == -0.00 :
+                matrice[1] = matrice[1] * -1
+            matrice[3] = math.sin(float(sys.argv[i+1]) / 180 * math.pi)
+            matrice[4] = matrice[0]
+        if sys.argv[i] == "-s" :
+            print("Reflection over an axis with an inclination angle of ", int(sys.argv[i+1]), " degrees", sep = "")
+            matrice[0] = math.cos(2 * float(sys.argv[i+1]) / 180 * math.pi)
+            matrice[1] = math.sin(2 * float(sys.argv[i+1]) / 180 * math.pi)
+            matrice[3] = math.sin(2 * float(sys.argv[i+1]) / 180 * math.pi)
+            matrice[4] = -matrice[0]
+        if sys.argv[i] == "-z" :
+            print("Scaling by factors ", int(sys.argv[i+1]), " and ", int(sys.argv[i+2]), sep = "")
+            matrice[0] = int(sys.argv[i+1]) * matrice[0]
+            matrice[4] = int(sys.argv[i+2]) * matrice[4]
+
+    print("%.2f"%matrice[0], "\t%.2f"%matrice[1], "\t%.2f"%matrice[2], sep = "")
+    print("%.2f"%matrice[3], "\t%.2f"%matrice[4], "\t%.2f"%matrice[5], sep = "")
+    print("%.2f"%matrice[6], "\t%.2f"%matrice[7], "\t%.2f"%matrice[8], sep = "")
+    a = matrice[0] * x + matrice[1] * y + matrice[2]
+    b = matrice[3] * x + matrice[4] * y + matrice[5]
+    print("(","%.2f"%x,", ","%.2f"%y,") => (%.2f"%a,", %.2f"%b,")", sep = "")
+
+main()

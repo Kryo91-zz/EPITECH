@@ -1,0 +1,59 @@
+#!/usr/bin/python3
+
+from help import *
+
+def func(x):
+    func = a4 * pow(x, 4) + a3 * pow(x, 3) + a2 * pow(x, 2) + a1 * x + a0
+    return (func)
+
+def func_derivated(x):
+    func_deriv = (4 * (a4 * pow(x, 3))) + (3 * (a3 * pow(x, 2))) + (2 * (a2 * pow(x, 1))) + a1
+    return (func_deriv)
+
+def newton_method(x):
+    a = 0.5
+    
+    print ("x =", a)
+    while abs(func(a)/func_derivated(a)) > pow(10, -n):
+        a = a - func(a)/func_derivated(a)
+        if pow(10, n) * func(a) % 1 == 0:
+            print("x =", a)
+        else:
+            print("x = %.*f" % (n, a))
+
+def bisection_method(n):
+    m = 0
+    c = 0
+    d = 1
+    
+    while abs(c-d) > pow(10, -n):
+        m = (c+d)/2
+        if func(m)*func(d) < 0:
+            d = m
+        else:
+            c = m
+        if pow(10, n) * c % 1 == 0:
+            print("x =", m)
+        else:
+            print("x = %.*f" % (n, m))
+            
+def secant_method(n):
+    a = 0
+    b = 1
+    c = 0
+ 
+    while abs (a - b) > pow(10, -n):
+        c = b - ((b - a) / (func(b) - func(a))) * func(b)
+        a = b
+        b = c
+        if pow(10, n) * c % 1 == 0:
+            print("x =", c)
+        else:
+            print("x = %.*f" % (n, c))
+
+if opt == 1:
+    bisection_method(n)
+if opt == 2:
+    newton_method(n)
+if opt == 3:
+    secant_method(n)

@@ -1,0 +1,55 @@
+#!/usr/bin/python3
+
+import sys
+import math
+
+i = int(len(sys.argv))
+
+if i != 8 and i != 2 and i == 1 or i > 8:
+    sys.exit(84)
+
+x0 = sys.argv[1]
+
+
+
+if x0 == "-h":
+    print("USAGE\n    ./101pong x0 y0 z0 x1 y1 z1 n\n\nDESCRIPTION\n    x0 ball abscissa at time t - 1\n    y0 ball ordinate at time t - 1\n    z0 ball altitude at time t - 1\n    x1 ball abscissa at time t\n    y1 ball ordinate at time t\n    z1 ball altitude at time t\n    n time shift (greater than or equal to zero, integer)")
+else:
+    try:
+        x0 = float(sys.argv[1])
+        y0 = float(sys.argv[2])
+        z0 = float(sys.argv[3])
+        x1 = float(sys.argv[4])
+        y1 = float(sys.argv[5])
+        z1 = float(sys.argv[6])
+        n = int(sys.argv[7])
+    except:
+        sys.exit(84)
+
+    if n < 0:
+        sys.exit(84)
+    else:
+        res1 = float(sys.argv[4]) - float(sys.argv[1])
+        res2 = float(sys.argv[5]) - float(sys.argv[2])
+        res3 = float(sys.argv[6]) - float(sys.argv[3])
+
+        res1_f = float(x1) + ((float(x1) - float(x0)) * int(n))
+        res2_f = float(y1) + ((float(y1) - float(y0)) * int(n))
+        res3_f = float(z1) + ((float(z1) - float(z0)) * int(n))
+        inci = (math.atan(res3/(math.sqrt(math.pow(res1, 2) + math.pow(res2, 2)))) * (180/math.pi))
+        n = str(n)
+
+        print("The velocity vector of the ball is:")
+        print("("+"%.2f" % res1+", "+ "%.2f" % res2+", "+"%.2f" % res3 +")")
+        print("At time t + " + n + ", ball coordinates will be:")
+        print("("+"%.2f" % res1_f+", "+ "%.2f" % res2_f+", "+"%.2f" % res3_f +")")
+
+        if res1_f < res1:
+            if inci < 0:
+                print("The incidence angle is:")
+                print("%.2f" % -inci, "degrees")
+            else:
+                print("The incidence angle is:")
+                print("%.2f" % inci, "degrees")
+        else:
+            print("The ball won't reach the paddle.")

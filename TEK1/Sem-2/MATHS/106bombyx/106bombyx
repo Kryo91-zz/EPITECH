@@ -1,0 +1,28 @@
+#!/usr/bin/python3
+
+from help import *
+
+def next_therm(xi):
+    x_next = k*xi*((1000-xi)/1000)
+    return x_next
+
+def next_therm_2(k, xi):
+    x_next = k*xi*((1000.0-xi)/1000.0)
+    return float(x_next)
+
+if i0 == 1 and i1 == 100:
+    print(i0, "%.2f" % n)
+    while i0 < i1:
+        i0 += 1
+        print(i0, "%.2f" % next_therm(n))
+        n = next_therm(n)
+else:
+    k = 1.0
+    while k <= 4:
+        i = 1
+        while i <= i1:
+            if i >= i0:
+                print("%.2f %.2f" % (k, n))
+            n = next_therm_2(k, n)
+            i += 1
+        k += 0.01

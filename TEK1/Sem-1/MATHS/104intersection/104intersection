@@ -1,0 +1,168 @@
+#!/usr/bin/python3
+
+import sys
+import math
+from math import*
+
+def find_two_point_sphere(xp, yp, zp, xv, yv, zv):
+    x = xp + 2*xv
+    y = yp + 2*yv
+    z = zp + 2*zv
+    check_cut(x, y, z, xp, yp, zp)
+
+def find_two_point_cone(xp, yp, zp, xv, yv, zv, p):
+    x = xp + 2*xv
+    y = yp + 2*yv
+    z = zp + 2*zv
+    check_cut_cone(x, y, z, xp, yp, zp, p)
+
+def find_two_point_cylinder(xp, yp, zp, xv, yv, zv, p):
+    x = xp + 2*xv
+    y = yp + 2*yv
+    z = zp + 2*zv
+    check_cut_cylinder(x, y, z, xp, yp, zp, p)
+
+def check_cut(x, y, z, xp, yp, zp):
+    a = xv**2 + yv**2 +zv**2
+    b = 2 * ((xp * xv) + (yv * yp) + (zv * zp))
+    c = xp**2 + yp**2 + zp**2 - p**2
+
+    d = b**2 - 4*a*c
+
+    if d < 0:
+        print("No intersection point.")
+    if d == 0:
+        sol1 = -b/(2*a)
+        x = xp + sol1*xv
+        y = yp + sol1*yv
+        z = zp + sol1*zv
+        print ("1 intersection point:\n("+"%.3f"%x+",","%.3f"%y+",","%.3f"%z+")")
+    if d > 0:
+        sol2 = (-b-sqrt(d))/(2*a)
+        sol1 = (-b+sqrt(d))/(2*a)
+        x = xp + sol1*xv
+        y = yp + sol1*yv
+        z = zp + sol1*zv
+        x2 = xp + sol2*xv
+        y2 = yp + sol2*yv
+        z2 = zp + sol2*zv
+        print("2 intersection points:\n("+"%.3f"%x+",","%.3f"%y+",","%.3f"%z+")")
+        print("("+"%.3f"%x2+",","%.3f"%y2+",","%.3f"%z2+")")
+
+
+def check_cut_cone(x, y, z, xp, yp, zp, p):
+    p = (p * pi) /180
+    a = (xv**2+yv**2)-(zv**2*tan(p)**2)
+    b = (2*xp*xv) + (2*yp*yv) - (2*zp*zv) * tan(p)**2
+    c = xp**2 + yp**2 - zp**2 *tan(p)**2
+
+    d = b**2 - 4*a*c
+
+    if d < 0:
+        print("No intersection point.")
+    if d == 0:
+        sol1 = -b/(2*a)
+        x = xp + sol1*xv
+        y = yp + sol1*yv
+        z = zp + sol1*zv
+        print ("1 intersection point:\n("+"%.3f"%x+",","%.3f"%y+",","%.3f"%z+")")
+    if d > 0:
+        sol2 = (-b-sqrt(d))/(2*a)
+        sol1 = (-b+sqrt(d))/(2*a)
+        x = xp + sol1*xv
+        y = yp + sol1*yv
+        z = zp + sol1*zv
+        x2 = xp + sol2*xv
+        y2 = yp + sol2*yv
+        z2 = zp + sol2*zv
+        print("2 intersection points:\n("+"%.3f"%x+",","%.3f"%y+",","%.3f"%z+")")
+        print("("+"%.3f"%x2+",","%.3f"%y2+",","%.3f"%z2+")")
+
+def check_cut_cylinder(x, y, z, xp, yp, zp, p):
+    a = (xv**2 + yv**2)
+    b = ((2*xv*xp) + (2*yv*yp))
+    c = xp**2 + yp**2 - p**2
+    d = b**2 - 4*a*c
+
+    if d < 0:
+        print("No intersection point.")
+    if d == 0:
+        print("There is an infinite number of intersection points.")
+    if d > 0 and d < 2:
+        sol1 = -b/(2*a)
+        x = xp + sol1*xv
+        y = yp + sol1*yv
+        z = zp + sol1*zv
+        print ("1 intersection point:\n("+"%.3f"%x+",","%.3f"%y+",","%.3f"%z+")")
+    if d > 2:
+        sol2 = (-b-sqrt(d))/(2*a)
+        sol1 = (-b+sqrt(d))/(2*a)
+        x = xp + sol1*xv
+        y = yp + sol1*yv
+        z = zp + sol1*zv
+        x2 = xp + sol2*xv
+        y2 = yp + sol2*yv
+        z2 = zp + sol2*zv
+        print("2 intersection points:\n("+"%.3f"%x+",","%.3f"%y+",","%.3f"%z+")")
+        print("("+"%.3f"%x2+",","%.3f"%y2+",","%.3f"%z2+")")
+
+x = int
+y = int
+z = int
+x2 = int
+y2 = int
+z2 = int
+a = int
+b = int
+c = int
+d = int
+sol1 = int
+sol2 = int
+i = int(len(sys.argv))
+
+if i != 2 and i != 9:
+    sys.exit(84)
+
+x0 = sys.argv[1]
+
+if x0 == "-h":
+    print("USAGE\n    ./104intersection opt xp yp zp xv yv zv p\n\nDESCRIPTION\n    opt            surface option: 1  for a sphere, 2 for a cylinder, 3 for a cone\n    (xp, yp, zp)   coordinates of a point by which the light ray passes through\n    (xv, yv, zv)   coordinates of a vector parallel to the light ray\n    p              parameter: radius of the sphere, radius of the cylinder, or\n                   angle formed by the cone and the Z-axis")
+    sys.exit(0)
+try:
+    opt = int(sys.argv[1])
+    xp = int(sys.argv[2])
+    yp = int(sys.argv[3])
+    zp = int(sys.argv[4])
+    xv = int(sys.argv[5])
+    yv = int(sys.argv[6])
+    zv = int(sys.argv[7])
+    p = int(sys.argv[8])
+except:
+    sys.exit(84)
+
+if xv == 0 and yv == 0 and zv == 0:
+    sys.exit(84)
+
+if opt == 1:
+    if p <= 0:
+        sys.exit(84)
+    print("Sphere of radius %d"%p)
+    print("Line passing through the point (%d, "%xp + "%d, "%yp + "%d) and parallel to the vector ("%zp + "%d, "%xv + "%d, "%yv + "%d)"%zv)
+    find_two_point_sphere(xp, yp, zp, xv, yv, zv)
+    sys.exit(0)
+if opt == 2:
+    if p <= 0:
+        sys.exit(84)
+    print("Cylinder of radius %d"%p)
+    print("Line passing through the point (%d, "%xp + "%d, "%yp + "%d) and parallel to the vector ("%zp + "%d, "%xv + "%d, "%yv + "%d)"%zv)
+    find_two_point_cylinder(xp, yp, zp, xv, yv, zv, p)
+    sys.exit(0)
+if opt == 3:
+    if p <= 0 or p >= 90:
+        sys.exit(84)
+    print("Cone with a %d degree angle"%p)
+    print("Line passing through the point (%d, "%xp + "%d, "%yp + "%d) and parallel to the vector ("%zp + "%d, "%xv + "%d, "%yv + "%d)"%zv)
+    find_two_point_cone(xp, yp, zp, xv, yv, zv, p)
+    sys.exit(0)
+else:
+    sys.exit(84)

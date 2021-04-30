@@ -1,0 +1,5 @@
+*.o
+*~
+libmy.a
+.vscode
+tmp

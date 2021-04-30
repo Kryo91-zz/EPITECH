@@ -1,0 +1,22 @@
+#!/usr/bin/python3
+
+from help import *
+
+a = 1
+x = 0.0
+result = 1.0
+while (x < 1.001):
+    while (a < (len(argv) - 1)):
+        num = [int(s) for s in argv[a].split('*')]
+        denum = [int(s) for s in argv[a + 1].split('*')]
+        if sum(denum[i] * x ** i for i in range(len(denum))) == 0:
+            exit(84)
+        result = result * (sum(num[i] * x ** i for i in range(len(num))) / sum(denum[i] * x ** i for i in range(len(denum))))
+        a = a + 2
+    if (round(x, 3) == int(x)):
+        print("%.3f -> %.5f" % (x, result))
+    else:
+        print("%.3f -> %.5f" % (round(x, 3), result))
+    x += 0.001
+    a = 1
+    result = 1.0

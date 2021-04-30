@@ -1,0 +1,47 @@
+#!/usr/bin/python3
+
+##
+## EPITECH PROJECT, 2019
+## 110borwein_2019
+## File description:
+## 110borwein
+##
+
+from help import sum, printer, integral, f, tester, argv
+import csv
+
+def midpoint_method(x):
+    d = 0.5
+    result = 0.0
+    for i in range (0, 10000):
+        result += integral((i/2) + (d/2), x) * d
+    return(result)
+
+def trapezoid_method(x):
+    result = 0.0
+    h = 0.5
+    for a in range (1, 10000):
+        result += sum(x, a * h)
+    result = ((result * 2) + sum(x, 5000) + sum(x, 0)) * (h / 2)
+    return(result)
+
+def simpson_method(x):
+    res = 0.0
+    ult = 0.0
+
+    for a in range (0, 10000):
+        if a != 0:
+            res = res + sum(x, a * 0.5)
+        ult = ult + sum(x, (a * 0.5) + (0.5 / 2))
+    result = (sum(x, 5000) + sum(x, 0) + (2 * res) + (4 * ult)) * (5000 / (6 * 10000))
+    return(result)
+
+x = tester(argv)
+for i in range(0, 3):
+    if (i == 0):
+        result = midpoint_method(x)
+    elif (i == 1):
+        result = trapezoid_method(x)
+    else :
+        result = simpson_method(x)
+    printer(result, i, x)

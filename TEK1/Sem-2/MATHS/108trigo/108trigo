@@ -1,0 +1,6 @@
+#!/usr/bin/python3
+
+from help import *
+from math import *
+
+exit(0)

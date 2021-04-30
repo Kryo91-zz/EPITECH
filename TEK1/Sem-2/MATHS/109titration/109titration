@@ -1,0 +1,83 @@
+#!/usr/bin/python3
+
+from help import *
+from math import *
+import csv
+
+a = 0.0
+z = 0.0
+tab1 = []
+b = 0
+c = 1
+e = 0
+delta1 = 0
+delta2 = 0
+ratio1 = 0
+ratio2 = 0
+index = 0
+index2 = 0
+tab2 = []
+tab3 = []
+print("Derivative:")
+tab1.append(0)
+for i in range(1, len(tab) - 1):
+    delta1 = tab[i][0] - tab[i-1][0]
+    delta2 = tab[i+1][0] - tab[i][0]
+    ratio1 = (tab[i][1] - tab[i-1][1]) / delta1
+    ratio2 = (tab[i+1][1] - tab[i][1]) / delta2
+    tab1.append(((delta1*ratio2)+(delta2*ratio1))/(delta1+delta2))
+    print("%.1f ml -> %.2f" % (tab[i][0], tab1[i]))
+    if (a < tab1[i]):
+        a = tab1[i]
+        c = int(tab[i][0])
+        index = i
+        b = i
+print("\n" "Equivalence point at %.1f ml" % c)
+print("\n" "Second derivative:")
+for i in range(2, len(tab1) - 1):
+    delta1 = tab[i][0] - tab[i-1][0]
+    delta2 = tab[i+1][0] - tab[i][0]
+    ratio1 = (tab1[i] - tab1[i-1]) / delta1
+    ratio2 = (tab1[i+1] - tab1[i]) / delta2
+    d = ((delta1*ratio2)+(delta2*ratio1))/(delta1+delta2)
+    tab3.append(((delta1*ratio2)+(delta2*ratio1))/(delta1+delta2))
+    print("%.1f ml -> %.2f" % (tab[i][0], d))
+    if (z < tab1[i]):
+        z = tab1[i]
+        e = int(tab[i][0])
+        index2 = i
+        b = i
+if e == c:
+    print("\nSecond derivative estimated:")
+    nb1 = float(tab[index-1][0])
+    nb2 = float(tab[index+1][0])
+    i = 0
+    while (nb1 < nb2):
+        tab2.append(nb1)
+        if nb1 == float(tab[index-1][0]):
+            print("%.1f ml -> %.2f" % (tab2[i], tab3[index2-3]))
+            nb1 += 0.1
+            i += 1
+            index += 1
+            index2 += 1
+        else:
+            print("%.1f ml ->" % tab2[i])
+            nb1 += 0.1
+            i += 1
+else:
+    print("\nSecond derivative estimated:")
+    nb1 = float(tab[index-1][0])
+    nb2 = float(tab[index+1][0])
+    i = 0
+    while (nb1 < nb2):
+        tab2.append(nb1)
+        if nb1 == float(tab[index-1][0]):
+            print("%.1f ml -> %.2f" % (tab2[i], tab3[index2-3]))
+            nb1 += 0.1
+            i += 1
+            index += 1
+            index2 += 1
+        else:
+            print("%.1f ml ->" % tab2[i])
+            nb1 += 0.1
+            i += 1
