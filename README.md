@@ -2,15 +2,28 @@
 ## Voici le repository contenant tout mes projets réalisés à EPITECH montpellier trié par année.
 ## Ce ReadMe est un récapitulatif des grades obtenues sur chaques modules.
 
-| Semestre 1 | Grades |                                                                | Semestre 2 | Grades |
-| ----------- | ----------- |                                                          | ------------ | ------------ |
-| CPOOL (piscine de C) | C |                                                           | CPE Part 1 | B |
-| CPOOL_Project (Projet de fin de piscine) | B |                                       | PSU Part 1 | C |
-| CPE Part 1 (Programmation Elementaire en C) | B |                                    | CPE Part 2 (Corewar) | D |
-| PSU Part 1 (Unix System Programming) | D |                                           | Mathematic | B |
-| Français | E |                                                                       | Binary Security | C |
-| CPE part 2 | B |                                                                     | MUL (RPG) | A |
-| Mathematic | C |                                                                     | Introduction to IA | B |
-| PSU Part 2 | B |                                                                     | Introduction to Web-Dev | D |
-| MUL (Graphical programming) | C |                                                    | Shell Programming (42sh) | C |
-                                                                                       | Français | A |
+| Semestre 1 | Grades |
+| ----------- | ----------- |
+| CPOOL (piscine de C) | C |
+| CPOOL_Project (Projet de fin de piscine) | B |
+| CPE Part 1 (Programmation Elementaire en C) | B |
+| PSU Part 1 (Unix System Programming) | D |
+| Français | E |
+| CPE part 2 | B |
+| Mathematic | C |
+| PSU Part 2 | B |
+| MUL (Graphical programming) | C |
+
+
+| Semestre 2 | Grades |
+| ------------ | ------------ |
+| CPE Part 1 | B |
+| PSU Part 1 | C |
+| CPE Part 2 (Corewar) | D |
+| Mathematic | B |
+| Binary Security | C |
+| MUL (RPG) | A |
+| Introduction to IA | B |
+| Introduction to Web-Dev | D |
+| Shell Programming (42sh) | C |
+| Français | A |
