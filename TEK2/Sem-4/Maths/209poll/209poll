@@ -1,0 +1,54 @@
+#!/usr/bin/python3
+
+from help import *
+
+def calcInfSec(var, p):
+    dif = 2.58 * (sqrt(var) * 100)
+    inf = p - dif
+
+    if (inf < 0):
+        inf = 0
+    return inf
+
+def calcUpSec(var, p):
+    dif = 2.58 * (sqrt(var) * 100)
+    up = p + dif
+
+    if (up > 100):
+        up = 100
+    return up
+
+def calcInfFirst(var, p):
+    dif = 1.96 * (sqrt(var) * 100)
+    inf = p - dif
+
+    if (inf < 0):
+        inf = 0
+    return inf
+
+def calcUpFirst(var, p):
+    dif = 1.96 * (sqrt(var) * 100)
+    up = p + dif
+
+    if (up > 100):
+        up = 100
+    return up
+
+def variance(N, n, p):
+    p = p/100.0
+    return ((p*(1-p))/sSize) * ((pSize-sSize)/(pSize-1))
+
+def poll(pSize, sSize, p):
+    var = variance(pSize, sSize, p)
+    b95i = calcInfFirst(var, p)
+    b95u = calcUpFirst(var, p)
+    b99i = calcInfSec(var, p)
+    b99u = calcUpSec(var, p)
+    print("Population size:          %d" % pSize)
+    print("Sample size:              %d" % sSize)
+    print("Voting intentions:        %.2f%%" % (p))
+    print("Variance:                 %f" % var)
+    print("95%% confidence interval: [%.2f%%; %.2f%%]" %(b95i, b95u))
+    print("99%% confidence interval: [%.2f%%; %.2f%%]" %(b99i, b99u))
+
+poll(pSize, sSize, p)

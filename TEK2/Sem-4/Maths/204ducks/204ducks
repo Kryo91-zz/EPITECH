@@ -1,0 +1,55 @@
+#!/usr/bin/python3
+
+from help import *
+
+def function(a, t):
+    return a*exp(-t) + (4-3*a)*exp(-2 * t) + (2*a-4)*exp(-4*t)
+
+def primitive(a, t):
+    return -a*exp(-t) - (4-3*a)/2*exp(-2*t) - (2*a-4)/4*exp(-4*t)
+
+def average_time(a):
+    res = 0.00
+    t = 0.00
+    while t < 100:
+        res += function(a, t) * t * 0.001
+        t += 0.001
+    return res
+
+def standard(a, res):
+    result = 0.0
+    t = 0.0
+    while t < 100:
+        result += (pow(t-res, 2)*function(a, t))/1000
+        t += 0.001
+    result = sqrt(result)
+    return result
+
+def time_after(a, percent):
+    t = 0.0
+    while t < 1000:
+        if primitive(a, t / 60) - primitive(a, 0) >= percent:
+            return t
+        t += 0.002
+    exit(84)
+
+def ducks(a):
+    res = average_time(a)
+    print("Average return time: %dm %ds"%(int(res), ceil((res - int(res)) * 60)))
+
+    standard_d = standard(a, res)
+    print("Standard deviation: %.3f"%(standard_d))
+
+    fifth_per = time_after(a, 0.5)
+    print("Time after which 50%% of ducks are back: %dm %.2ds"%(fifth_per/60, fifth_per%60))
+
+    nineth_per = time_after(a, 0.99)
+    print("Time after which 99%% of ducks are back: %dm %.2ds"%(nineth_per/60, nineth_per%60))
+
+    res_primitive = (primitive(a, 1) - primitive(a, 0))
+    print("Percentage of ducks back after 1 minute: %.1f%%"%(res_primitive*100))
+
+    res_primitive = (primitive(a, 2) - primitive(a, 0))
+    print("Percentage of ducks back after 2 minutes: %.1f%%"%(res_primitive*100))
+
+ducks(float(argv[1]))

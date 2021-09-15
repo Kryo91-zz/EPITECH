@@ -1,0 +1,40 @@
+#!/usr/bin/python3
+
+from help import *
+
+
+def f(mu, sigma, x):
+    return (1 / (float(sigma) * sqrt(2 * pi))) * exp(-0.5 * pow((float(x) - float(mu)) / float(sigma), 2))
+
+def pomme(mu, sigma):
+    i = 0
+    res = 0.00
+    while i <= 200:
+        res = f(mu, sigma, i)
+        print("%d %.5f" % (i, res))
+        i += 1
+
+
+def inferior(mu, sigma, x):
+    res = 0.00
+    i = 0.0
+    while i < x:
+        res += f(mu, sigma, i)
+        i += 0.01
+    print ("%.1f%% of people have an IQ inferior to %d" % (res, x))
+
+def between(mu, sigma, x, y):
+    inf = x
+    res = 0.00
+    while x < y:
+        res += f(mu, sigma, x)
+        x += 0.01
+    print ("%.1f%% of people have an IQ between %d and %d" % (res, inf, y))
+
+
+if len(argv) == 3:
+    pomme(int(argv[1]), int(argv[2]))
+if (len(argv) == 4):
+    inferior(int(argv[1]), int(argv[2]), int(argv[3]))
+if (len(argv) == 5):
+    between(int(argv[1]), int(argv[2]), int(argv[3]), int(argv[4]))

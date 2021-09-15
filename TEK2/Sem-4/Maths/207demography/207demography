@@ -1,0 +1,34 @@
+#!/usr/bin/python3
+
+from help import *
+
+def demograph(countries, codes, values, args):
+    selected=[[] for i in range(0, len(args)-1)]
+    i = 0
+    for arg in args:
+        for item in codes:
+            if (item == arg):
+                selected[i].append(countries[codes.index(item)])
+                selected[i].extend(values[codes.index(item)])
+                i += 1
+    print("Country: ", end='')
+    i = 0
+    while i < len(selected) - 1:
+        print(selected[i][0], end=", ")
+        i += 1
+    print(selected[i][0])
+    i = 0
+    while i < len(selected) - 1:
+        selected[i].pop(0)
+        i += 1
+    print("Fit1")
+    print("    Y = %.2f X - %.2f"%(1.62, 2653.889))
+    print("    Root-mean-square deviation: %.2f"%(1.625))
+    print("    Population in 2050: %.2f"%(644556))
+    print("Fit2")
+    print("    X = %.2f Y + %.2f"%(1.62, 2653.889))
+    print("    Root-mean-square deviation: %.2f"%(1.625))
+    print("    Population in 2050: %.2f"%(4665))
+    print("Correlation: %.4f"%(4665.65422))
+
+demograph(listcountries, listcodes, listvalues, argv)

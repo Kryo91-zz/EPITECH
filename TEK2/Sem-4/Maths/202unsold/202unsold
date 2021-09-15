@@ -1,0 +1,70 @@
+#!/usr/bin/python3
+
+from help import *
+
+
+def formule(a, b, x, y):
+    return ((a - x) * (b - y))/((5 * a - 150) * (5 * b - 150))
+
+def unsold(a, b):
+    print("--------------------------------------------------------------------------------")
+    tab = []
+
+    print("\tX=10\tX=20\tX=30\tX=40\tX=50\tY law")
+    for y in [1, 2, 3, 4, 5]:
+        for x in [1, 2, 3, 4, 5]:
+            tab.append(formule(a, b, (x * 10), (y * 10)))
+    taby = [tab[0] + tab[1] + tab[2] + tab[3] + tab[4], tab[5] + tab[6] + tab[7] + tab[8] + tab[9], tab[10] + tab[11] + tab[12] + tab[13] + tab[14], tab[15] + tab[16] + tab[17] + tab[18] + tab[19], tab[20] + tab[21] + tab[22] + tab[23] + tab[24]]
+    tabx = [tab[0] + tab[5] + tab[10] + tab[15] + tab[20], tab[1] + tab[6] + tab[11] + tab[16] + tab[21], tab[2] + tab[7] + tab[12] + tab[17] + tab[22], tab[3] + tab[8] + tab[13] + tab[18] + tab[23], tab[4] + tab[9] + tab[14] + tab[19] + tab[24]]
+    print("Y=10\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f" %(tab[0], tab[1], tab[2], tab[3], tab[4], taby[0]))
+    print("Y=20\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f" %(tab[5], tab[6], tab[7], tab[8], tab[9], taby[1]))
+    print("Y=30\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f" %(tab[10], tab[11], tab[12], tab[13], tab[14], taby[2]))
+    print("Y=40\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f" %(tab[15], tab[16], tab[17], tab[18], tab[19], taby[3]))
+    print("Y=50\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f" %(tab[20], tab[21], tab[22], tab[23], tab[24], taby[4]))
+    print("X law\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f" %(tabx[0], tabx[1], tabx[2], tabx[3], tabx[4], 1))
+    print("--------------------------------------------------------------------------------")
+
+    zlist = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+
+    zlist[0] = tab[0]
+    zlist[1] = tab[1] + tab[5]
+    zlist[2] = tab[2] + tab[6] + tab[10]
+    zlist[3] = tab[3] + tab[7] + tab[11] + tab[15]
+    zlist[4] = tab[4] + tab[8] + tab[12] + tab[16] + tab[20]
+    zlist[5] = tab[9] + tab[13] + tab[17] + tab[21]
+    zlist[6] = tab[14] + tab[18] + tab[22]
+    zlist[7] = tab[19] + tab[23]
+    zlist[8] = tab[24]
+
+    print("z\t20\t30\t40\t50\t60\t70\t80\t90\t100")
+    print("p(Z=z)\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f"%\
+        (zlist[0],zlist[1],zlist[2],zlist[3],zlist[4],zlist[5],zlist[6],zlist[7],zlist[8]))
+    
+    print("--------------------------------------------------------------------------------")
+    expX = 0.0
+    expY = 0.0
+    varX = 0.0
+    varY = 0.0
+
+    for y in [1, 2, 3, 4, 5]:
+        expX += (y*10)*(tabx[y-1])
+        expY += (y*10)*(taby[y-1])
+
+    for y in [1, 2, 3, 4, 5]:
+        varX += tabx[y-1]*(y*10-expX)**2
+        varY += taby[y-1]*(y*10-expY)**2
+
+
+    expZ = expX + expY
+    varZ = varX + varY
+    print("expected value of X:\t%.1f"%expX)
+    print("variance of X:\t\t%.1f"%varX)
+    print("expected value of Y:\t%.1f"%expY)
+    print("variance of Y:\t\t%.1f"%varY)
+    print("expected value of Z:\t%.1f"%expZ)
+    print("variance of Z:\t\t%.1f"%varZ)
+
+
+    print("--------------------------------------------------------------------------------")
+
+unsold(int(argv[1]), int(argv[2]))

@@ -1,0 +1,178 @@
+#!/usr/bin/python3
+
+from help import *
+
+
+def factorial(nb):
+    if (nb > 1):
+        return nb * factorial(nb - 1) 
+    else:
+        return 1
+
+def getprob(a, b):
+    return (factorial(a) / (factorial(b) * factorial(a - b))) * pow((1.0 / 6.0), b) * pow((5.0 / 6.0), (a - b)) * 100
+
+def yams(dice, nb):
+    res = 0
+    for i in dice:
+        if res == 0 and i != nb:
+            res = 1.0 / 6.0
+        elif i != nb:
+            res *= 1.0 / 6.0
+    print("Chances to get a %d yams: %.2f%%" % (nb, res * 100))
+
+def four_of_a_kind(dice, nb):
+    res = 0
+    count = 0
+    for i in dice:
+        if i == nb:
+            count += 1
+    if count >= 4:
+        print("Chances to get a %d four-of-a-kind: %.2f%%" % (nb, 100))
+        return
+    else:
+        n = nb - count
+        while n < (6 - count):
+            res += getprob(5 - count, n)
+            n += 1
+    print("Chances to get a %d four-of-a-kind: %.2f%%" % (nb, res))
+
+def pair(dice, nb):
+    res = 0
+    count = 0
+    for i in dice:
+        if i == nb:
+            count += 1
+    if count >= 2:
+        print("Chances to get a %d pair: %.2f%%" % (nb, 100))
+        return
+    else:
+        n = nb - count
+        while n < (6 - count):
+            res += getprob(5 - count, n)
+            n += 1
+    print("Chances to get a %d pair: %.2f%%" % (nb, res))
+
+def three_of_a_kind(dice, nb):
+    res = 0
+    count = 0
+    for i in dice:
+        if i == nb:
+            count += 1
+    if count >= 3:
+        print("Chances to get a %d three-of-a-kind: %.2f%%" % (nb, 100))
+        return
+    else:
+        n = nb - count
+        while n < (6 - count):
+            res += getprob(5 - count, n)
+            n += 1
+    print("Chances to get a %d three-of-a-kind: %.2f%%" % (nb, res))
+
+def straight(dice, nb):
+    res = 0
+    dicetoroll = 5
+    i = 0
+    y = 1
+    diceValue = [1, 2, 3, 4]
+    x = 0
+    idx = 0
+    same = False
+    factor = 1
+    tmp = 0
+
+    if nb == 5:
+        while i < 5:
+            while y < 6:
+                if dice[i] == y:
+                    while x <= idx:
+                        if dice[i] == diceValue[x]:
+                            same = True
+                        x += 1
+                    if same == False:
+                        diceValue[idx] = y
+                        idx += 1
+                    x = 0
+                    same = False
+                y += 1
+            i += 1
+            y = 0
+    elif nb == 6:
+        y = 2
+        while i < 5:
+            while y < 7:
+                if dice[i] == y:
+                    while x <= idx:
+                        if dice[i] == diceValue[x]:
+                            same = True
+                        x += 1
+                    if same == False:
+                        diceValue[idx] = y
+                        idx += 1
+                    x = 0
+                    same = False
+                y += 1
+            i += 1
+            y = 0
+    else:
+        exit(84)
+    diceToReroll = 5 - idx
+    tmp = diceToReroll
+    while tmp > 0:
+        factor = factor * tmp
+        tmp -= 1
+    res = factor / pow(6, diceToReroll) * 100
+    print("Chances to get a %d straight: %.2f%%" % (nb, res))
+
+def full(dice, nb, nb2):
+    res = 0
+    countnb1 = 0
+    countnb2 = 0
+    res1 = 0
+    res2 = 0
+    if (nb == nb2):
+        exit(84)
+    for i in dice:
+        if i == nb:
+            countnb1 += 1
+        if i == nb2:
+            countnb2 += 1
+    if countnb2 > 2:
+        countnb2 = 2
+
+    if countnb1 > 3:
+        countnb1 = 3
+
+    if countnb1 == 3 and countnb2 == 2:
+        print("Chances to get a %d full of %d: %.2f%%" % (nb, nb2, 100))
+    else:
+        res1 = 3 - countnb1
+        res2 = 5 - (countnb1 + countnb2)
+        res = factorial(res2) / (factorial(res1) * factorial(res2 - res1)) / pow(6, res2) * 100
+        print("Chances to get a %d full of %d: %.2f%%" % (nb, nb2, res))
+
+def check_yams(combi, dice):
+    if (combi[0] == "yams"):
+        yams(dice, int(combi[1]))
+    elif (combi[0] == "four"):
+        four_of_a_kind(dice, int(combi[1]))
+    elif (combi[0] == "three"):
+        three_of_a_kind(dice, int(combi[1]))
+    elif (combi[0] == "pair"):
+        pair(dice, int(combi[1]))
+    elif (combi[0] == "straight"):
+        if (combi[1] != "5" and combi[1] != "6"):
+            exit(84)
+        straight(dice, int(combi[1]))
+    elif (combi[0] == "full"):
+        full(dice, int(combi[1]), int(combi[2]))
+    else:
+        exit(84)
+
+dice = list()
+dice.append(int(argv[1]))
+dice.append(int(argv[2]))
+dice.append(int(argv[3]))
+dice.append(int(argv[4]))
+dice.append(int(argv[5]))
+check_yams(combi, dice)

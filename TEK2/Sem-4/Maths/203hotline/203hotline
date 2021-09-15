@@ -1,0 +1,64 @@
+#!/usr/bin/python3
+
+from help import *
+
+
+def fact(res, n):
+    # if n <= 0:
+    #     return res
+    # return (fact((res*n), (n-1)))
+    i = 1
+    while i <= n:
+        res *= i
+        i += 1
+    return res
+
+def coeffbino(n, k):
+    res = 1
+    if k > n:
+        return 0
+    else:
+        nb1 = int(fact(res, n))
+        nb2 = int(fact(res, (n-k)))
+        nb3 = int(fact(res, k))
+        return (nb1//(nb2*nb3))
+
+def distribution(a):
+    start = time()
+    overloadBino = 0
+    print("Binomial distribution:")
+    for i in range(0, 51):
+        res = (factorial(3500)/(factorial(i)*factorial(3500 - i))*((a/(8*60*60))**i)*((1 - (a/(8*60*60)))**(3500 - i)))
+        print("%d -> %.3f"%(i, res), end='\t')
+        if((i + 1) % 5 == 0):
+            print('')
+        if (i > 25):
+            overloadBino += res
+    end = time()
+    print("\nOverload: %.1f%%"%(overloadBino*100))
+    print("Computation time: %.2f ms\n"%((end - start) * 1000))
+
+    start = time()
+    overload = 0
+    print("Poisson distribution:")
+    for i in range(0, 51):
+        var = 0.12152777777777777623580135468728258274495601654052734375 * a
+        res = (exp(-var)*var**i)/factorial(i)
+        print("%d -> %.3f"%(i, res), end='\t')
+        if((i + 1) % 5 == 0):
+            print('')
+        if (i > 25):
+            overload += res
+    end = time()
+    print("\nOverload: %.1f%%"%(overload * 100))
+    print("Computation time: %.2f ms"%((end - start) * 1000))
+
+def combination(a, b):
+    print("%d-combinations of a set of size %d:"%(b, a))
+    result = coeffbino(a, b)
+    print("%d"%(result))
+
+if len(argv) == 2:
+    distribution(int(argv[1]))
+elif len(argv) == 3:
+    combination(int(argv[1]), int(argv[2]))
